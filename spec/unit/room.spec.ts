@@ -2383,7 +2383,7 @@ describe("Room", function() {
         });
 
         it("should aggregate relations in thread event timeline set", () => {
-            Thread.setServerSideSupport(true, true);
+            Thread.setServerSideSupport(true, true, false);
             const threadRoot = mkMessage();
             const rootReaction = mkReaction(threadRoot);
             const threadResponse = mkThreadResponse(threadRoot);

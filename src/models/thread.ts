@@ -56,6 +56,7 @@ interface IThreadOpts {
  */
 export class Thread extends TypedEventEmitter<EmittedEvents, EventHandlerMap> {
     public static hasServerSideSupport: boolean;
+    public static hasServerSideSupportForThreadList: boolean;
 
     /**
      * A reference to all the events ID at the bottom of the threads
@@ -134,8 +135,13 @@ export class Thread extends TypedEventEmitter<EmittedEvents, EventHandlerMap> {
         this.emit(ThreadEvent.Update, this);
     }
 
-    public static setServerSideSupport(hasServerSideSupport: boolean, useStable: boolean): void {
+    public static setServerSideSupport(
+        hasServerSideSupport: boolean,
+        useStable: boolean,
+        hasListThreads: boolean,
+    ): void {
         Thread.hasServerSideSupport = hasServerSideSupport;
+        Thread.hasServerSideSupportForThreadList = hasListThreads;
         if (!useStable) {
             FILTER_RELATED_BY_SENDERS.setPreferUnstable(true);
             FILTER_RELATED_BY_REL_TYPES.setPreferUnstable(true);

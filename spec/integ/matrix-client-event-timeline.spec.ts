@@ -299,7 +299,7 @@ describe("MatrixClient event timelines", function() {
     afterEach(function() {
         httpBackend.verifyNoOutstandingExpectation();
         client.stopClient();
-        Thread.setServerSideSupport(false, false);
+        Thread.setServerSideSupport(false, false, false);
     });
 
     describe("getEventTimeline", function() {
@@ -552,7 +552,7 @@ describe("MatrixClient event timelines", function() {
         it("should handle thread replies with server support by fetching a contiguous thread timeline", async () => {
             // @ts-ignore
             client.clientOpts.experimentalThreadSupport = true;
-            Thread.setServerSideSupport(true, false);
+            Thread.setServerSideSupport(true, false, false);
             client.stopClient(); // we don't need the client to be syncing at this time
             const room = client.getRoom(roomId);
             const thread = room.createThread(THREAD_ROOT.event_id, undefined, [], false);
@@ -598,7 +598,7 @@ describe("MatrixClient event timelines", function() {
         it("should return relevant timeline from non-thread timelineSet when asking for the thread root", async () => {
             // @ts-ignore
             client.clientOpts.experimentalThreadSupport = true;
-            Thread.setServerSideSupport(true, false);
+            Thread.setServerSideSupport(true, false, false);
             client.stopClient(); // we don't need the client to be syncing at this time
             const room = client.getRoom(roomId);
             const threadRoot = new MatrixEvent(THREAD_ROOT);
@@ -630,7 +630,7 @@ describe("MatrixClient event timelines", function() {
         it("should return undefined when event is not in the thread that the given timelineSet is representing", () => {
             // @ts-ignore
             client.clientOpts.experimentalThreadSupport = true;
-            Thread.setServerSideSupport(true, false);
+            Thread.setServerSideSupport(true, false, false);
             client.stopClient(); // we don't need the client to be syncing at this time
             const room = client.getRoom(roomId);
             const threadRoot = new MatrixEvent(THREAD_ROOT);
@@ -658,7 +658,7 @@ describe("MatrixClient event timelines", function() {
         it("should return undefined when event is within a thread but timelineSet is not", () => {
             // @ts-ignore
             client.clientOpts.experimentalThreadSupport = true;
-            Thread.setServerSideSupport(true, false);
+            Thread.setServerSideSupport(true, false, false);
             client.stopClient(); // we don't need the client to be syncing at this time
             const room = client.getRoom(roomId);
             const timelineSet = room.getTimelineSets()[0];
@@ -1053,7 +1053,7 @@ describe("MatrixClient event timelines", function() {
     it("should re-insert room IDs for bundled thread relation events", async () => {
         // @ts-ignore
         client.clientOpts.experimentalThreadSupport = true;
-        Thread.setServerSideSupport(true, false);
+        Thread.setServerSideSupport(true, false, false);
 
         httpBackend.when("GET", "/sync").respond(200, {
             next_batch: "s_5_4",
